@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.Protocol;
 
 namespace Aula4.Controllers
 {
@@ -11,6 +12,7 @@ namespace Aula4.Controllers
         public ActionResult Index()
         {
             var lista = LerLista();
+
             return View(lista);
         }
 
@@ -19,13 +21,12 @@ namespace Aula4.Controllers
             List<Imoveis> lista;
             string imoveis = HttpContext.Session.GetString("imoveis");
 
-            if (string.IsNullOrEmpty(imoveis))
+            if (String.IsNullOrEmpty(imoveis))
                 lista = IniciarLista();
             else
             {
                 lista = JsonConvert.DeserializeObject<List<Imoveis>>(imoveis);
-
-                if (lista == null || lista.Count == 0)
+                if (lista.Count == 0)
                     lista = IniciarLista();
             }
 
@@ -46,10 +47,10 @@ namespace Aula4.Controllers
         }
 
         // GET: ImoveisController/Details/5
-        public ActionResult Details(int index)
+        public ActionResult Details(int id)
         {
             var lista = LerLista();
-            return View(lista[index]);
+            return View(lista[id]);
         }
 
         // GET: ImoveisController/Create
